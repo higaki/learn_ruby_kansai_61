@@ -4,7 +4,7 @@ RUBY_DESCRIPTION # => "ruby 2.1.1p76 (2014-02-24 revision 45161) [x86_64-darwin1
 
 class Person; end
 
-obj = Person.new                # => #<Person:0x007fdf011f3b40>
+obj = Person.new                # => #<Person:0x007f839197c608>
 
 obj.class                       # => Person
 Person.superclass               # => Object
@@ -17,7 +17,7 @@ class Person
   end
 end
 
-matz = Person.new('matz')       # => #<Person:0x007fdf011f2290 @name="matz">
+matz = Person.new('matz')       # => #<Person:0x007f8391977720 @name="matz">
 
 
 class Person
@@ -53,3 +53,17 @@ end
 
 matz.age                        # => 49
 dhh.age                         # => 34
+
+
+matz.to_s                       # => "#<Person:0x007f8391977720>"
+matz.method(:to_s)              # => #<Method: Person(Kernel)#to_s>
+
+class Person
+  def to_s
+    "#{@name}(#{age})"
+  end
+end
+
+matz.to_s                       # => "matz(49)"
+dhh.to_s                        # => "dhh(34)"
+matz.method(:to_s)              # => #<Method: Person#to_s>

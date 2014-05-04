@@ -4,7 +4,7 @@ RUBY_DESCRIPTION # => "ruby 2.1.1p76 (2014-02-24 revision 45161) [x86_64-darwin1
 
 class Person; end
 
-obj = Person.new                # => #<Person:0x007fe9930886d8>
+obj = Person.new                # => #<Person:0x007ff7611fb408>
 
 obj.class                       # => Person
 Person.superclass               # => Object
@@ -12,12 +12,12 @@ Person.ancestors                # => [Person, Object, Kernel, BasicObject]
 
 
 class Person
-  def initialize name
+  def initialize name # !> previous definition of initialize was here
     @name = name
   end
 end
 
-matz = Person.new('matz')       # => #<Person:0x007fe9930236c0 @name="matz">
+matz = Person.new('matz')       # => #<Person:0x007ff7611f9e78 @name="matz">
 
 
 class Person
@@ -25,3 +25,21 @@ class Person
 end
 
 matz.name                       # => "matz"
+
+
+class Person
+  def initialize name, born # !> method redefined; discarding old initialize
+    @name, @born = name, born
+  end
+
+  attr_accessor :born
+end
+
+matz.methods.map(&:to_s).grep(/born/) # => ["born", "born="]
+
+
+matz.born = Time.local(1965, 4, 14)
+dhh = Person.new('dhh', Time.local(1979, 10, 15))
+
+matz.born                       # => 1965-04-14 00:00:00 +0900
+dhh.born                        # => 1979-10-15 00:00:00 +0900

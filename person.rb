@@ -4,7 +4,7 @@ RUBY_DESCRIPTION # => "ruby 2.1.1p76 (2014-02-24 revision 45161) [x86_64-darwin1
 
 class Person; end
 
-obj = Person.new                # => #<Person:0x007fd59110d2b8>
+obj = Person.new                # => #<Person:0x007fbf64108940>
 
 obj.class                       # => Person
 Person.superclass               # => Object
@@ -17,7 +17,7 @@ class Person
   end
 end
 
-matz = Person.new('matz')       # => #<Person:0x007fd59110bf30 @name="matz">
+matz = Person.new('matz')       # => #<Person:0x007fbf641075e0 @name="matz">
 
 
 class Person
@@ -55,7 +55,7 @@ matz.age                        # => 49
 dhh.age                         # => 34
 
 
-matz.to_s                       # => "#<Person:0x007fd59110bf30>"
+matz.to_s                       # => "#<Person:0x007fbf641075e0>"
 matz.method(:to_s)              # => #<Method: Person(Kernel)#to_s>
 
 class Person
@@ -115,8 +115,8 @@ class Person
   end
 end
 
-matz.hash                       # => 1608110943548551986
-dhh.hash                        # => 3394067242018496055
+matz.hash                       # => -2806510800011864717
+dhh.hash                        # => 580655999382282430
 
 
 class Person
@@ -137,3 +137,18 @@ h.rehash
 h[matz]                         # => "Ruby"
 h[dhh]                          # => "Rails"
 h[key]                          # => "Ruby"
+
+
+class Person
+  protected :born
+end
+
+begin
+  matz.born                     # => 
+rescue NoMethodError => ex
+  ex                            # => #<NoMethodError: protected method `born' called for matz(49):Person>
+end
+
+class Person; public :born end  # put back
+
+matz.born                       # => 1965-04-14 00:00:00 +0900

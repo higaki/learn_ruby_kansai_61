@@ -4,7 +4,7 @@ RUBY_DESCRIPTION # => "ruby 2.1.1p76 (2014-02-24 revision 45161) [x86_64-darwin1
 
 class Person; end
 
-obj = Person.new                # => #<Person:0x007ff7611fb408>
+obj = Person.new                # => #<Person:0x007fdf011f3b40>
 
 obj.class                       # => Person
 Person.superclass               # => Object
@@ -17,7 +17,7 @@ class Person
   end
 end
 
-matz = Person.new('matz')       # => #<Person:0x007ff7611f9e78 @name="matz">
+matz = Person.new('matz')       # => #<Person:0x007fdf011f2290 @name="matz">
 
 
 class Person
@@ -43,3 +43,13 @@ dhh = Person.new('dhh', Time.local(1979, 10, 15))
 
 matz.born                       # => 1965-04-14 00:00:00 +0900
 dhh.born                        # => 1979-10-15 00:00:00 +0900
+
+
+class Person
+  def age
+    (Time.now.strftime('%Y%m%d').to_i - @born.strftime('%Y%m%d').to_i) / 1_00_00
+  end
+end
+
+matz.age                        # => 49
+dhh.age                         # => 34

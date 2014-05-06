@@ -28,7 +28,7 @@ matz.name                       # => "matz"
 
 
 class Person
-  def initialize name, born # !> method redefined; discarding old initialize
+  def initialize name, born = nil # !> method redefined; discarding old initialize
     @name, @born = name, born
   end
 

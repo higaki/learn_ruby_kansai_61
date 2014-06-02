@@ -4,9 +4,11 @@ require './ex3.rb'
 
 class Person
   def === o
-    return o.name == "Person" if o.kind_of? Class
-    return false unless o.instance_of? Person
-    @name.upcase === o.name.upcase
+    case o
+    when Class  then o.kind_of? Person
+    when Person then @name.upcase === o.name.upcase
+    else             false
+    end
   end
 end
 
@@ -21,10 +23,10 @@ p1 === p2                        # => true
 p1 === p3                        # => true
 p1 === p4                        # => false
 
-p0 === Person                   # => true
+p0 === Person                   # => false
 p0 === String                   # => false
-p1 === Person                   # => true
-p4 === Person                   # => true
+p1 === Person                   # => false
+p4 === Person                   # => false
 
 p0 === 'matz'                   # => false
 
